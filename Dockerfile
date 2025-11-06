@@ -84,9 +84,8 @@ RUN chown bitcoin:bitcoin /home/bitcoin/.bitcoin/bitcoin.conf
 USER bitcoin
 WORKDIR /home/bitcoin
 
-# Volumes for persistent blockchain data and temporary files
+# Volume for persistent blockchain data
 VOLUME ["/bitcoin"]
-VOLUME ["/tmp"]
 
 # Expose Bitcoin ports
 # 8332: RPC, 8333: P2P mainnet, 18332: RPC testnet, 18333: P2P testnet
