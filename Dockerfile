@@ -23,9 +23,6 @@ RUN set -ex; \
         linux/arm/v7) \
             BITCOIN_ARCH="arm-linux-gnueabihf" \
             ;; \
-        linux/ppc64le) \
-            BITCOIN_ARCH="powerpc64le-linux-gnu" \
-            ;; \
         *) \
             echo "Unsupported platform: ${TARGETPLATFORM}"; \
             exit 1 \
