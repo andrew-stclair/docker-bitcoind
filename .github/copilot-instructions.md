@@ -55,7 +55,7 @@ esac
 1. Verify the Bitcoin Core binary exists at https://bitcoin.org/bin/bitcoin-core-{VERSION}/
 2. Confirm Debian base image supports the architecture
 3. Test the build with Docker Buildx
-4. Update the GitHub Actions workflow's `platforms` list
+4. Update the `platforms` field in `.github/workflows/build-docker.yml`
 
 ## Version Management
 
