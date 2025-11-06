@@ -62,5 +62,5 @@ WORKDIR /home/bitcoin
 EXPOSE 8332 8333 18332 18333
 
 # Default entrypoint
-ENTRYPOINT ["bitcoind"]
+ENTRYPOINT ["/usr/local/bin/bitcoind"]
 CMD ["-printtoconsole"]
