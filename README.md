@@ -25,16 +25,18 @@ The workflow will automatically build for all supported platforms and push to Gi
 
 ## Usage
 
+The Docker image uses `/bitcoin` as a persistent volume for blockchain data storage. The configuration is pre-set to use this directory for both blockchain blocks and other data.
+
 ```bash
 # Pull the latest image
 docker pull ghcr.io/andrew-stclair/bitcoind:latest
 
-# Run bitcoind
+# Run bitcoind with persistent storage
 docker run -d \
   --name bitcoind \
   -p 8333:8333 \
   -p 8332:8332 \
-  -v bitcoin-data:/home/bitcoin/.bitcoin \
+  -v bitcoin-data:/bitcoin \
   ghcr.io/andrew-stclair/bitcoind:latest
 
 # Run with custom configuration
@@ -42,10 +44,24 @@ docker run -d \
   --name bitcoind \
   -p 8333:8333 \
   -p 8332:8332 \
-  -v bitcoin-data:/home/bitcoin/.bitcoin \
+  -v bitcoin-data:/bitcoin \
   -v /path/to/bitcoin.conf:/home/bitcoin/.bitcoin/bitcoin.conf \
   ghcr.io/andrew-stclair/bitcoind:latest
 ```
+
+### Default Configuration
+
+The container includes a default `bitcoin.conf` file that configures the data directory:
+
+```
+# [core]
+# Specify a non-default location to store blockchain data.
+blocksdir=/bitcoin/blocks
+# Specify a non-default location to store blockchain and other data.
+datadir=/bitcoin
+```
+
+This configuration ensures all blockchain data is stored in the `/bitcoin` volume for easy persistence and backup.
 
 ## Configuration
 

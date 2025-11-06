@@ -49,13 +49,27 @@ RUN apt-get update && apt-get install -y \
 # Copy binaries from builder
 COPY --from=builder /usr/local/bin/* /usr/local/bin/
 
-# Create bitcoin user and data directory
+# Create bitcoin user and data directories
 RUN useradd -r -m -d /home/bitcoin bitcoin \
-    && mkdir -p /home/bitcoin/.bitcoin \
-    && chown -R bitcoin:bitcoin /home/bitcoin
+    && mkdir -p /home/bitcoin/.bitcoin /bitcoin/blocks \
+    && chown -R bitcoin:bitcoin /home/bitcoin /bitcoin
+
+# Create default bitcoin.conf
+RUN echo "# This config should be placed in following path:" > /home/bitcoin/.bitcoin/bitcoin.conf && \
+    echo "# ~/.bitcoin/bitcoin.conf" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
+    echo "" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
+    echo "# [core]" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
+    echo "# Specify a non-default location to store blockchain data." >> /home/bitcoin/.bitcoin/bitcoin.conf && \
+    echo "blocksdir=/bitcoin/blocks" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
+    echo "# Specify a non-default location to store blockchain and other data." >> /home/bitcoin/.bitcoin/bitcoin.conf && \
+    echo "datadir=/bitcoin" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
+    chown bitcoin:bitcoin /home/bitcoin/.bitcoin/bitcoin.conf
 
 USER bitcoin
 WORKDIR /home/bitcoin
+
+# Volume for persistent blockchain data
+VOLUME ["/bitcoin"]
 
 # Expose Bitcoin ports
 # 8332: RPC, 8333: P2P mainnet, 18332: RPC testnet, 18333: P2P testnet
