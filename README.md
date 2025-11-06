@@ -8,8 +8,6 @@ This Docker image is built for the following platforms:
 - linux/amd64
 - linux/arm64
 - linux/arm/v7
-- linux/riscv64
-- linux/ppc64le
 
 ## Building
 
