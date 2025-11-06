@@ -75,18 +75,7 @@ This configuration ensures all blockchain data is stored in the `/bitcoin` volum
 
 For enhanced security, this container can run with a read-only root filesystem using Docker's `--read-only` flag. This prevents any modifications to the container's filesystem, reducing the attack surface.
 
-When running with `--read-only`, you must provide a tmpfs mount for `/tmp` to allow temporary file operations:
-
-```bash
-docker run -d \
-  --name bitcoind \
-  --read-only \
-  --tmpfs /tmp \
-  -p 8333:8333 \
-  -p 8332:8332 \
-  -v bitcoin-data:/bitcoin \
-  ghcr.io/andrew-stclair/bitcoind:latest
-```
+When running with `--read-only`, you must provide a tmpfs mount for `/tmp` to allow temporary file operations.
 
 The container is designed to work seamlessly with this configuration, as all persistent data is written to the `/bitcoin` volume mount, and temporary files use the `/tmp` tmpfs mount.
 
