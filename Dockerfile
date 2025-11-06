@@ -32,8 +32,9 @@ RUN set -ex; \
             ;; \
     esac; \
     BITCOIN_URL="https://bitcoin.org/bin/bitcoin-core-${BITCOIN_VERSION}"; \
-    curl -SL "$BITCOIN_URL/bitcoin-${BITCOIN_VERSION}-${BITCOIN_ARCH}.tar.gz" -o bitcoin.tar.gz; \
-    curl -SL "$BITCOIN_URL/bitcoin-${BITCOIN_VERSION}-${BITCOIN_ARCH}.tar.gz.asc" -o bitcoin.tar.gz.asc; \
+    BITCOIN_FILE="bitcoin-${BITCOIN_VERSION}-${BITCOIN_ARCH}.tar.gz"; \
+    curl -SL "$BITCOIN_URL/$BITCOIN_FILE" -o "$BITCOIN_FILE"; \
+    curl -SL "$BITCOIN_URL/$BITCOIN_FILE.asc" -o "$BITCOIN_FILE.asc"; \
     curl -SL "$BITCOIN_URL/SHA256SUMS" -o SHA256SUMS; \
     curl -SL "$BITCOIN_URL/SHA256SUMS.asc" -o SHA256SUMS.asc; \
     # Import Bitcoin Core release signing keys \
@@ -60,10 +61,10 @@ RUN set -ex; \
     # Verify the signature of SHA256SUMS file \
     gpg --verify SHA256SUMS.asc SHA256SUMS; \
     # Verify the tarball checksum \
-    grep " bitcoin-${BITCOIN_VERSION}-${BITCOIN_ARCH}.tar.gz\$" SHA256SUMS | sha256sum -c -; \
+    grep " $BITCOIN_FILE\$" SHA256SUMS | sha256sum -c -; \
     # Verify the tarball signature (optional, as SHA256SUMS is signed) \
-    # gpg --verify bitcoin.tar.gz.asc bitcoin.tar.gz; \
-    tar -xzf bitcoin.tar.gz; \
+    # gpg --verify "$BITCOIN_FILE.asc" "$BITCOIN_FILE"; \
+    tar -xzf "$BITCOIN_FILE"; \
     mv bitcoin-${BITCOIN_VERSION}/bin/* /usr/local/bin/; \
     rm -rf /tmp/*
 
