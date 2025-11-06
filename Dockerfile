@@ -17,7 +17,10 @@ RUN set -ex; \
         linux/amd64) \
             BITCOIN_ARCH="x86_64-linux-gnu" \
             ;; \
-        linux/arm64|linux/arm/v7) \
+        linux/arm64) \
+            BITCOIN_ARCH="aarch64-linux-gnu" \
+            ;; \
+        linux/arm/v7) \
             BITCOIN_ARCH="arm-linux-gnueabihf" \
             ;; \
         linux/riscv64) \
