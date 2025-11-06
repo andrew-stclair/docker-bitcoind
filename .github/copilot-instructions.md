@@ -85,8 +85,8 @@ esac
 - Monitor releases at https://bitcoin.org/bin/
 - Always use the latest stable version available
 - Update in **both** locations:
-  1. `Dockerfile` → `ARG BITCOIN_VERSION=28.1` (near the top of the file)
-  2. `.github/workflows/build-docker.yml` → `default: '28.1'` (in the workflow inputs)
+  1. `Dockerfile` → `ARG BITCOIN_VERSION=28.1` (in the build arguments section)
+  2. `.github/workflows/build-docker.yml` → `default: '28.1'` (in the workflow_dispatch inputs)
 
 **Update Process**:
 1. Check https://bitcoin.org/bin/ for new releases
@@ -271,7 +271,7 @@ When making changes, always:
 
 1. Check Debian releases status
 2. Test new base image: `docker pull debian:trixie-slim` (or next stable version)
-3. Update both FROM statements in Dockerfile (builder stage and runtime stage)
+3. Update the FROM statement in both the builder stage and runtime stage of the Dockerfile
 4. Test all architectures build successfully
 5. Verify GPG keyserver access still works
 6. Update README.md if needed
