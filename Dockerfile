@@ -34,19 +34,18 @@ RUN set -ex; \
     BITCOIN_URL="https://bitcoin.org/bin/bitcoin-core-${BITCOIN_VERSION}"; \
     BITCOIN_FILE="bitcoin-${BITCOIN_VERSION}-${BITCOIN_ARCH}.tar.gz"; \
     curl -SL "$BITCOIN_URL/$BITCOIN_FILE" -o "$BITCOIN_FILE"; \
-    curl -SL "$BITCOIN_URL/$BITCOIN_FILE.asc" -o "$BITCOIN_FILE.asc"; \
     curl -SL "$BITCOIN_URL/SHA256SUMS" -o SHA256SUMS; \
     curl -SL "$BITCOIN_URL/SHA256SUMS.asc" -o SHA256SUMS.asc; \
     # Import Bitcoin Core release signing keys \
     GNUPGHOME="$(mktemp -d)"; \
     export GNUPGHOME; \
-    # List of key fingerprints from https://bitcoincore.org/en/download/ and builder keys \
+    # Bitcoin Core builder keys that signed this release \
     gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys \
-        590B7292695AFFA5B672CBB2E13FC145CD3F4304 \
         01EA5486DE18A882D4C2684590C8019E36C2E964 \
-        99EAC8F2B9B50F2C7A029E8B8C49A5E6A4E4F27E \
-        152812300785C96444D3334D17565732E08E5E41 \
+        71A3B16735405025D447E8F274810B012346C9A6 \
+        26646D99CBAEC9B81982EF6029D9EE6B1FC730C1 \
         101598DC823C1B5F9A6624ABA5E0907A0380E6C3 \
+        152812300785C96444D3334D17565732E08E5E41 \
         E61773CD6E01040E2F1BD78CE7E2984B6289C93A \
         9DEAE0DC7063249FB05474681E4AED62986CD25D \
         C388F6961FB972A95678E327F62711DBDCA8AE56 \
