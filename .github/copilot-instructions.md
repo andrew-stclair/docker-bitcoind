@@ -72,7 +72,7 @@ esac
 
 **Update Process**:
 1. Check for new Debian stable releases
-2. Update `FROM debian:bookworm-slim` to the new version (e.g., `debian:trixie-slim`)
+2. Update both `FROM debian:bookworm-slim` statements (builder and runtime stages) to the new version (e.g., `debian:trixie-slim`)
 3. Test builds on all supported architectures
 4. Verify GPG keyserver access and signature verification still work
 5. Update README.md if there are any compatibility notes
