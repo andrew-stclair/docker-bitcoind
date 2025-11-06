@@ -61,8 +61,6 @@ RUN set -ex; \
     gpg --verify SHA256SUMS.asc SHA256SUMS; \
     # Verify the tarball checksum \
     grep " $BITCOIN_FILE\$" SHA256SUMS | sha256sum -c -; \
-    # Verify the tarball signature (optional, as SHA256SUMS is signed) \
-    # gpg --verify "$BITCOIN_FILE.asc" "$BITCOIN_FILE"; \
     tar -xzf "$BITCOIN_FILE"; \
     mv bitcoin-${BITCOIN_VERSION}/bin/* /usr/local/bin/; \
     rm -rf /tmp/*
