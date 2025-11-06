@@ -73,16 +73,9 @@ RUN useradd -r -m -d /home/bitcoin bitcoin \
     && mkdir -p /home/bitcoin/.bitcoin /bitcoin/blocks \
     && chown -R bitcoin:bitcoin /home/bitcoin /bitcoin
 
-# Create default bitcoin.conf
-RUN echo "# This config should be placed in following path:" > /home/bitcoin/.bitcoin/bitcoin.conf && \
-    echo "# ~/.bitcoin/bitcoin.conf" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
-    echo "" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
-    echo "# [core]" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
-    echo "# Specify a non-default location to store blockchain data." >> /home/bitcoin/.bitcoin/bitcoin.conf && \
-    echo "blocksdir=/bitcoin/blocks" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
-    echo "# Specify a non-default location to store blockchain and other data." >> /home/bitcoin/.bitcoin/bitcoin.conf && \
-    echo "datadir=/bitcoin" >> /home/bitcoin/.bitcoin/bitcoin.conf && \
-    chown bitcoin:bitcoin /home/bitcoin/.bitcoin/bitcoin.conf
+# Add default bitcoin.conf
+COPY bitcoin.conf /home/bitcoin/.bitcoin/bitcoin.conf
+RUN chown bitcoin:bitcoin /home/bitcoin/.bitcoin/bitcoin.conf
 
 USER bitcoin
 WORKDIR /home/bitcoin
