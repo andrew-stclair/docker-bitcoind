@@ -75,7 +75,7 @@ docker run -d \
   -printtoconsole \
   -testnet \
   -rpcuser=user \
-  -rpcpassword=password
+  -rpcpassword=YOUR_STRONG_PASSWORD
 ```
 
 ## GitHub Container Registry
