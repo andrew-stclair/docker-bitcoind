@@ -33,10 +33,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/riscv64,linux/ppc64le
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le
           push: true
           tags: |
             ghcr.io/andrew-stclair/bitcoind:${{ inputs.version }}

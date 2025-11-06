@@ -23,9 +23,6 @@ RUN set -ex; \
         linux/arm/v7) \
             BITCOIN_ARCH="arm-linux-gnueabihf" \
             ;; \
-        linux/riscv64) \
-            BITCOIN_ARCH="riscv64-linux-gnu" \
-            ;; \
         linux/ppc64le) \
             BITCOIN_ARCH="powerpc64le-linux-gnu" \
             ;; \
