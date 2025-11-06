@@ -21,13 +21,13 @@ To trigger a build:
 3. Click "Run workflow"
 4. Enter the Bitcoin version to build (default: 28.1)
 
-The workflow will automatically build for all supported platforms and push to Docker Hub.
+The workflow will automatically build for all supported platforms and push to GitHub Container Registry (ghcr.io).
 
 ## Usage
 
 ```bash
 # Pull the latest image
-docker pull <your-dockerhub-username>/bitcoind:latest
+docker pull ghcr.io/andrew-stclair/bitcoind:latest
 
 # Run bitcoind
 docker run -d \
@@ -35,7 +35,7 @@ docker run -d \
   -p 8333:8333 \
   -p 8332:8332 \
   -v bitcoin-data:/home/bitcoin/.bitcoin \
-  <your-dockerhub-username>/bitcoind:latest
+  ghcr.io/andrew-stclair/bitcoind:latest
 
 # Run with custom configuration
 docker run -d \
@@ -44,7 +44,7 @@ docker run -d \
   -p 8332:8332 \
   -v bitcoin-data:/home/bitcoin/.bitcoin \
   -v /path/to/bitcoin.conf:/home/bitcoin/.bitcoin/bitcoin.conf \
-  <your-dockerhub-username>/bitcoind:latest
+  ghcr.io/andrew-stclair/bitcoind:latest
 ```
 
 ## Configuration
@@ -55,18 +55,18 @@ You can pass Bitcoin Core configuration options as command-line arguments:
 docker run -d \
   --name bitcoind \
   -p 8333:8333 \
-  <your-dockerhub-username>/bitcoind:latest \
+  ghcr.io/andrew-stclair/bitcoind:latest \
   -printtoconsole \
   -testnet \
   -rpcuser=user \
   -rpcpassword=password
 ```
 
-## Docker Hub Setup
+## GitHub Container Registry
 
-To use the workflow, you need to set up the following secrets in your GitHub repository:
-- `DOCKER_USERNAME`: Your Docker Hub username
-- `DOCKER_PASSWORD`: Your Docker Hub password or access token
+The Docker images are automatically published to GitHub Container Registry (ghcr.io) using GitHub Actions. The workflow uses the built-in `GITHUB_TOKEN` secret for authentication, which is automatically provided by GitHub Actions.
+
+No additional secrets need to be configured - the workflow has `packages: write` permission to push images to GHCR.
 
 ## License
 
