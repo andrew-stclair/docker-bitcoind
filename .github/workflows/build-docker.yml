@@ -43,3 +43,26 @@ jobs:
             ghcr.io/andrew-stclair/bitcoind:latest
           build-args: |
             BITCOIN_VERSION=${{ inputs.version }}
+  create-issue-on-failure:
+    runs-on: ubuntu-latest
+    needs: build
+    if: failure() # This job only runs if the 'build-and-test' job fails
+    steps:
+      - name: Create issue and assign to Copilot
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const issueTitle = `Workflow Failure: ${{ github.workflow }} - ${{ github.run_id }}`;
+            const issueBody = `The workflow "${{ github.workflow }}" (run ID: ${{ github.run_id }}) failed. Please investigate and resolve the issue.`;
+
+            const issue = await github.rest.issues.create({
+              owner,
+              repo,
+              title: issueTitle,
+              body: issueBody,
+              assignees: ['@copilot'] // Assign the issue to Copilot
+            });
+
+            console.log(`Issue created: ${issue.data.html_url}`);
