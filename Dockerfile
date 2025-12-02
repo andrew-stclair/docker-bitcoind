@@ -91,6 +91,10 @@ VOLUME ["/bitcoin"]
 # 8332: RPC, 8333: P2P mainnet, 18332: RPC testnet, 18333: P2P testnet
 EXPOSE 8332 8333 18332 18333
 
+# Health check using bitcoin-cli
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD bitcoin-cli -datadir=/bitcoin -getinfo || exit 1
+
 # Default entrypoint
 ENTRYPOINT ["/usr/local/bin/bitcoind"]
 CMD ["-printtoconsole"]

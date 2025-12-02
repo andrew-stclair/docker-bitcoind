@@ -79,6 +79,31 @@ When running with `--read-only`, you must provide a tmpfs mount for `/tmp` to al
 
 The container is designed to work seamlessly with this configuration, as all persistent data is written to the `/bitcoin` volume mount, and temporary files use the `/tmp` tmpfs mount.
 
+### Health Check
+
+The container includes a built-in health check that verifies the bitcoind service is running and responding. The health check uses `bitcoin-cli -getinfo` to query the daemon status.
+
+Health check configuration:
+- **Interval**: 30 seconds between checks
+- **Timeout**: 10 seconds per check
+- **Start period**: 60 seconds (allows time for initial startup)
+- **Retries**: 3 failed checks before marking unhealthy
+
+You can monitor the health status using:
+
+```bash
+# Check container health status
+docker inspect --format='{{.State.Health.Status}}' bitcoind
+
+# View recent health check results
+docker inspect --format='{{json .State.Health}}' bitcoind | jq
+```
+
+The container will report one of the following statuses:
+- `starting`: Container is in the start period
+- `healthy`: bitcoind is responding to RPC commands
+- `unhealthy`: bitcoind is not responding after multiple retries
+
 ## Configuration
 
 You can pass Bitcoin Core configuration options as command-line arguments:
